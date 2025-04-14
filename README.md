@@ -1,0 +1,1 @@
+Repository for "Myblog" project: https://github.com/VazAnton/myblog
