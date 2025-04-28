@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MyBlog
 
 Repository for "Myblog" project: https://github.com/VazAnton/myblog
@@ -210,3 +211,6 @@ Gradle) вызвать задачу "gradle bootRun".
 имитация реального взаимодействия с основными эндпоинтами приложения. Результат взаимодействия оценивается
 с помощью логических выражений, создаваемых с использованием методов интерфейса **ResultMatcher**, а построение
 самих запросов осуществляется за счёт обращения к методам фабрики **MockMvcRequestBuilders**.
+=======
+Repository for "Myblog" project: https://github.com/VazAnton/myblog
+>>>>>>> 5a9ae4a20bb052825d616caf142f212688bb30cc
