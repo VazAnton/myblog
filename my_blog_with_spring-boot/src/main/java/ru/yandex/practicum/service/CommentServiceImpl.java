@@ -14,7 +14,6 @@ import ru.yandex.practicum.model.Post;
 import ru.yandex.practicum.repository.CommentRepository;
 import ru.yandex.practicum.repository.PostRepository;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -79,14 +78,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteComment(long commentId, long postId) {
-//        Post post = getPostFromDb(postId);
-//        Comment comment = getCommentFromDb(commentId);
-//        Set<Comment> comments = post.getComments();
-//        comments.remove(comment);
-//        post.setComments(comments);
-//        //postRepository.save(post);
-//        commentRepository.delete(comment);
-//        log.info("Информация о комментарии обновлена");
         Comment comment = getCommentFromDb(commentId);
         commentRepository.delete(comment);
         log.info("Информация о комментарии обновлена");
