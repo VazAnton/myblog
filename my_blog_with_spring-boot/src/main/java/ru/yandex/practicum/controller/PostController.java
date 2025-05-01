@@ -7,10 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.CommentInputDto;
 import ru.yandex.practicum.dto.PostInputDto;
-import ru.yandex.practicum.dto.PostOutputDto;
+import ru.yandex.practicum.dto.PostJdbcOutputDto;
 import ru.yandex.practicum.model.Paging;
-import ru.yandex.practicum.service.CommentService;
-import ru.yandex.practicum.service.PostService;
+import ru.yandex.practicum.service.CommentJdbcService;
+import ru.yandex.practicum.service.PostJdbcService;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostService postService;
-    private final CommentService commentService;
+    private final PostJdbcService postService;
+    private final CommentJdbcService commentService;
 
     @GetMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,7 +34,7 @@ public class PostController {
                              @PathVariable long postId,
                              Model model) {
         postService.updatePost(postInput, postId);
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         return "add-post";
     }
@@ -45,7 +45,7 @@ public class PostController {
                                          @RequestParam(defaultValue = "0") Long pageNumber,
                                          @RequestParam(defaultValue = "10") Long pageSize,
                                          Model model) {
-        List<PostOutputDto> posts = postService.getPostsWithParameters(search, pageNumber, pageSize);
+        List<PostJdbcOutputDto> posts = postService.getPostsWithParameters(search, pageNumber, pageSize);
         model.addAttribute("posts", posts);
         model.addAttribute("search", search);
         model.addAttribute("paging", new Paging(pageNumber, pageSize, postService.countAllPosts()));
@@ -56,7 +56,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.FOUND)
     public String getPost(@PathVariable long postId,
                           Model model) {
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         return "post";
     }
@@ -64,14 +64,14 @@ public class PostController {
     @GetMapping(path = "/images/{postId}")
     public long getSizeOfImage(long postId) {
         return postService.getSizeOfImage(postId);
-    } //е) GET "/images/{id}"
+    }
 
     @PostMapping(path = "/{postId}/like")
     public String likePost(@PathVariable long postId,
                            @RequestParam boolean like,
                            Model model) {
         postService.likePost(postId, like);
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         return "redirect:/posts/{postId}";
     }
@@ -82,7 +82,7 @@ public class PostController {
                              Model model,
                              @RequestParam(defaultValue = "0") Long pageNumber,
                              @RequestParam(defaultValue = "10") Long pageSize) {
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         model.addAttribute("paging", new Paging(pageNumber, pageSize, postService.countAllPosts()));
         postService.deletePost(postId);
@@ -94,8 +94,8 @@ public class PostController {
     public String addComment(@RequestBody CommentInputDto commentInput,
                              @PathVariable long postId,
                              Model model) {
-        commentService.addComment(commentInput, postId);
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        postService.addComment(commentInput, postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         return "redirect:/posts/{postId}";
     }
@@ -105,8 +105,8 @@ public class PostController {
                                 @PathVariable long commentId,
                                 @PathVariable long postId,
                                 Model model) {
-        commentService.updateComment(commentInput, commentId, postId);
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        postService.updateComment(commentInput, commentId, postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         return "redirect:/posts/{postId}";
     }
@@ -116,7 +116,7 @@ public class PostController {
     public String deleteComment(@PathVariable long commentId,
                                 @PathVariable long postId,
                                 Model model) {
-        PostOutputDto postOutputDto = postService.getPost(postId);
+        PostJdbcOutputDto postOutputDto = postService.getPost(postId);
         model.addAttribute("post", postOutputDto);
         commentService.deleteComment(commentId, postId);
         return "redirect:/posts/{postId}";

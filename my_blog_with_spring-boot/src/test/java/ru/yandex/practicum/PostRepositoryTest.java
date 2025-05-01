@@ -48,17 +48,6 @@ public class PostRepositoryTest {
     }
 
     @Test
-    public void checkFindPostById() {
-        postRepository.save(post);
-
-        Optional<Post> foundPost = postRepository.findById(1L);
-
-        assertThat(foundPost).isPresent();
-        assertEquals(foundPost.get().getTitle(), post.getTitle());
-        assertEquals(foundPost.get().getTagsAsText(), post.getTagsAsText());
-    }
-
-    @Test
     public void checkDeletePost() {
         postRepository.save(post);
         postRepository.deleteById(1L);

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-<<<<<<< HEAD
-    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/my_blog_with_spring-boot" vcs="Git" />
-=======
-    <mapping directory="$PROJECT_DIR$/myblog" vcs="Git" />
->>>>>>> 5a9ae4a20bb052825d616caf142f212688bb30cc
   </component>
 </project>
